@@ -19,19 +19,20 @@
     </enum>
     <!-- ardupilot specific MAV_CMD_* commands -->
     <enum name="MAV_CMD">
-      <entry value="211" name="MAV_CMD_DO_GRIPPER">
-        <description>Mission command to operate EPM gripper.</description>
-        <param index="1">Gripper number (a number from 1 to max number of grippers on the vehicle).</param>
-        <param index="2">Gripper action (0=release, 1=grab. See GRIPPER_ACTIONS enum).</param>
+      <!-- 211 used by common.xml -->
+      <entry value="212" name="MAV_CMD_DO_AUTOTUNE_ENABLE">
+        <description>Enable/disable autotune.</description>
+        <param index="1">Enable (1: enable, 0:disable).</param>
+        <param index="2">Empty.</param>
         <param index="3">Empty.</param>
         <param index="4">Empty.</param>
         <param index="5">Empty.</param>
         <param index="6">Empty.</param>
         <param index="7">Empty.</param>
       </entry>
-      <entry value="212" name="MAV_CMD_DO_AUTOTUNE_ENABLE">
-        <description>Enable/disable autotune.</description>
-        <param index="1">Enable (1: enable, 0:disable).</param>
+      <entry value="215" name="MAV_CMD_DO_SET_RESUME_REPEAT_DIST">
+        <description>Set the distance to be repeated on mission resume</description>
+        <param index="1" label="Distance" units="m">Distance.</param>
         <param index="2">Empty.</param>
         <param index="3">Empty.</param>
         <param index="4">Empty.</param>
@@ -107,6 +108,16 @@
         <param index="2">FieldY.</param>
         <param index="3">FieldZ.</param>
         <param index="4">Empty.</param>
+        <param index="5">Empty.</param>
+        <param index="6">Empty.</param>
+        <param index="7">Empty.</param>
+      </entry>
+      <entry value="42006" name="MAV_CMD_FIXED_MAG_CAL_YAW">
+        <description>Magnetometer calibration based on provided known yaw. This allows for fast calibration using WMM field tables in the vehicle, given only the known yaw of the vehicle. If Latitude and longitude are both zero then use the current vehicle location.</description>
+        <param index="1" label="Yaw" units="deg">Yaw of vehicle in earth frame.</param>
+        <param index="2" label="CompassMask">CompassMask, 0 for all.</param>
+        <param index="3" label="Latitude" units="deg">Latitude.</param>
+        <param index="4" label="Longitude" units="deg">Longitude.</param>
         <param index="5">Empty.</param>
         <param index="6">Empty.</param>
         <param index="7">Empty.</param>
@@ -211,16 +222,7 @@
         <param index="6">Magic number.</param>
         <param index="7">Magic number.</param>
       </entry>
-      <entry value="42600" name="MAV_CMD_DO_WINCH">
-        <description>Command to operate winch.</description>
-        <param index="1">Winch number (0 for the default winch, otherwise a number from 1 to max number of winches on the vehicle).</param>
-        <param index="2">Action (0=relax, 1=relative length control, 2=rate control. See WINCH_ACTIONS enum.).</param>
-        <param index="3">Release length (cable distance to unwind in meters, negative numbers to wind in cable).</param>
-        <param index="4">Release rate (meters/second).</param>
-        <param index="5">Empty.</param>
-        <param index="6">Empty.</param>
-        <param index="7">Empty.</param>
-      </entry>
+      <!-- 42600 used by common.xml -->
       <entry value="42650" name="MAV_CMD_FLASH_BOOTLOADER">
         <description>Update the bootloader</description>
         <param index="1">Empty</param>
@@ -230,6 +232,33 @@
         <param index="5">Magic number - set to 290876 to actually flash</param>
         <param index="6">Empty</param>
         <param index="7">Empty</param>
+      </entry>
+      <entry value="42651" name="MAV_CMD_BATTERY_RESET" hasLocation="false" isDestination="false">
+        <description>Reset battery capacity for batteries that accumulate consumed battery via integration.</description>
+        <param index="1" label="battery mask">Bitmask of batteries to reset. Least significant bit is for the first battery.</param>
+        <param index="2" label="percentage" minValue="0" maxValue="100" increment="1">Battery percentage remaining to set.</param>
+      </entry>
+      <entry value="42700" name="MAV_CMD_DEBUG_TRAP">
+        <description>Issue a trap signal to the autopilot process, presumably to enter the debugger.</description>
+        <param index="1">Magic number - set to 32451 to actually trap.</param>
+        <param index="2">Empty.</param>
+        <param index="3">Empty.</param>
+        <param index="4">Empty.</param>
+        <param index="5">Empty.</param>
+        <param index="6">Empty.</param>
+        <param index="7">Empty.</param>
+      </entry>
+      <entry value="42701" name="MAV_CMD_SCRIPTING">
+        <description>Control onboard scripting.</description>
+        <param index="1" enum="SCRIPTING_CMD">Scripting command to execute</param>
+      </entry>
+    </enum>
+    <enum name="SCRIPTING_CMD">
+      <entry value="0" name="SCRIPTING_CMD_REPL_START">
+        <description>Start a REPL session.</description>
+      </entry>
+      <entry value="1" name="SCRIPTING_CMD_REPL_STOP">
+        <description>End a REPL session.</description>
       </entry>
     </enum>
     <!-- AP_Limits Enums -->
@@ -273,29 +302,6 @@
       </entry>
       <entry value="2" name="LAND_IMMEDIATELY">
         <description>Flag set when plane is to immediately descend to break altitude and land without GCS intervention. Flag not set when plane is to loiter at Rally point until commanded to land.</description>
-      </entry>
-    </enum>
-    <!-- gripper action enum -->
-    <enum name="GRIPPER_ACTIONS">
-      <description>Gripper actions.</description>
-      <entry value="0" name="GRIPPER_ACTION_RELEASE">
-        <description>Gripper release cargo.</description>
-      </entry>
-      <entry value="1" name="GRIPPER_ACTION_GRAB">
-        <description>Gripper grab onto cargo.</description>
-      </entry>
-    </enum>
-    <!-- Winch action enum -->
-    <enum name="WINCH_ACTIONS">
-      <description>Winch actions.</description>
-      <entry value="0" name="WINCH_RELAXED">
-        <description>Relax winch.</description>
-      </entry>
-      <entry value="1" name="WINCH_RELATIVE_LENGTH_CONTROL">
-        <description>Winch unwinds or winds specified length of cable optionally using specified rate.</description>
-      </entry>
-      <entry value="2" name="WINCH_RATE_CONTROL">
-        <description>Winch unwinds or winds cable at specified rate in meters/seconds.</description>
       </entry>
     </enum>
     <!-- Camera event types -->
@@ -845,6 +851,9 @@
       <entry value="512" name="EKF_PRED_POS_HORIZ_ABS">
         <description>Set if EKF's predicted horizontal position (absolute) estimate is good.</description>
       </entry>
+      <entry value="1024" name="EKF_UNINITIALIZED">
+        <description>Set if EKF has never been healthy.</description>
+      </entry>
     </enum>
     <enum name="PID_TUNING_AXIS">
       <entry value="1" name="PID_TUNING_ROLL"/>
@@ -862,6 +871,7 @@
       <entry value="4" name="MAG_CAL_SUCCESS"/>
       <entry value="5" name="MAG_CAL_FAILED"/>
       <entry value="6" name="MAG_CAL_BAD_ORIENTATION"/>
+      <entry value="7" name="MAG_CAL_BAD_RADIUS"/>
     </enum>
     <enum name="MAV_REMOTE_LOG_DATA_BLOCK_COMMANDS">
       <description>Special ACK block numbers control activation of dataflash log streaming.</description>
@@ -932,6 +942,7 @@
       <entry value="10" name="PLANE_MODE_AUTO"/>
       <entry value="11" name="PLANE_MODE_RTL"/>
       <entry value="12" name="PLANE_MODE_LOITER"/>
+      <entry value="13" name="PLANE_MODE_TAKEOFF"/>
       <entry value="14" name="PLANE_MODE_AVOID_ADSB"/>
       <entry value="15" name="PLANE_MODE_GUIDED"/>
       <entry value="16" name="PLANE_MODE_INITIALIZING"/>
@@ -1110,13 +1121,6 @@
       <field type="uint8_t" name="target_system">System ID.</field>
       <field type="uint8_t" name="target_component">Component ID.</field>
       <field type="uint8_t" name="idx">Point index (first point is 1, 0 is for return point).</field>
-    </message>
-    <message id="162" name="FENCE_STATUS">
-      <description>Status of geo-fencing. Sent in extended status stream when fencing enabled.</description>
-      <field type="uint8_t" name="breach_status">Breach status (0 if currently inside fence, 1 if outside).</field>
-      <field type="uint16_t" name="breach_count">Number of fence breaches.</field>
-      <field type="uint8_t" name="breach_type" enum="FENCE_BREACH">Last breach type.</field>
-      <field type="uint32_t" name="breach_time" units="ms">Time (since boot) of last breach.</field>
     </message>
     <message id="163" name="AHRS">
       <description>Status of DCM attitude estimator.</description>
@@ -1383,11 +1387,12 @@
       <field type="float" name="orientation_confidence">Confidence in orientation (higher is better).</field>
       <field type="uint8_t" name="old_orientation" enum="MAV_SENSOR_ORIENTATION">orientation before calibration.</field>
       <field type="uint8_t" name="new_orientation" enum="MAV_SENSOR_ORIENTATION">orientation after calibration.</field>
+      <field type="float" name="scale_factor">field radius correction factor</field>
     </message>
     <!-- EKF status message from autopilot to GCS. -->
     <message id="193" name="EKF_STATUS_REPORT">
       <description>EKF Status message including flags and variances.</description>
-      <field type="uint16_t" name="flags" enum="EKF_STATUS_FLAGS">Flags.</field>
+      <field type="uint16_t" name="flags" enum="EKF_STATUS_FLAGS" display="bitmask">Flags.</field>
       <!-- supported flags see EKF_STATUS_FLAGS enum -->
       <field type="float" name="velocity_variance">Velocity variance.</field>
       <!-- below 0.5 is good, 0.5~0.79 is warning, 0.8 or higher is bad -->
@@ -1486,6 +1491,26 @@
       <field type="uint8_t" name="status" enum="GOPRO_REQUEST_STATUS">Status.</field>
     </message>
     <!-- 219 to 224 RESERVED for more GOPRO-->
+    <message id="225" name="EFI_STATUS">
+      <description>EFI status output</description>
+      <field type="uint8_t" name="health">EFI health status</field>
+      <field type="float" name="ecu_index">ECU index</field>
+      <field type="float" name="rpm">RPM</field>
+      <field type="float" name="fuel_consumed" units="g">Fuel consumed</field>
+      <field type="float" name="fuel_flow" units="g/min">Fuel flow rate</field>
+      <field type="float" name="engine_load" units="%">Engine load</field>
+      <field type="float" name="throttle_position" units="%">Throttle position</field>
+      <field type="float" name="spark_dwell_time" units="ms">Spark dwell time</field>
+      <field type="float" name="barometric_pressure" units="kPa">Barometric pressure</field>
+      <field type="float" name="intake_manifold_pressure" units="kPa">Intake manifold pressure(</field>
+      <field type="float" name="intake_manifold_temperature" units="degC">Intake manifold temperature</field>
+      <field type="float" name="cylinder_head_temperature" units="degC">Cylinder head temperature</field>
+      <field type="float" name="ignition_timing" units="deg">Ignition timing (Crank angle degrees)</field>
+      <field type="float" name="injection_time" units="ms">Injection time</field>
+      <field type="float" name="exhaust_gas_temperature" units="degC">Exhaust gas temperature</field>
+      <field type="float" name="throttle_out" units="%">Output throttle</field>
+      <field type="float" name="pt_compensation">Pressure/temperature compensation</field>
+    </message>
     <message id="226" name="RPM">
       <description>RPM sensor output.</description>
       <field type="float" name="rpm1">RPM Sensor1.</field>
