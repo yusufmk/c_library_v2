@@ -36,6 +36,17 @@
 			<field type="uint8_t" name="engine_failure">engine_failure</field>
 			<field type="uint8_t" name="mission_failure">mission_failure</field>
 		</message>
+
+		<message id="13001" name="ATTITUDE2">
+			<description>The attitude(2) in the aeronautical frame (right-handed, Z-down, X-front, Y-right).</description>
+			<field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
+			<field type="float" name="roll" units="rad">Roll angle (-pi..+pi)</field>
+			<field type="float" name="pitch" units="rad">Pitch angle (-pi..+pi)</field>
+			<field type="float" name="yaw" units="rad">Yaw angle (-pi..+pi)</field>
+			<field type="float" name="rollspeed" units="rad/s">Roll angular speed</field>
+			<field type="float" name="pitchspeed" units="rad/s">Pitch angular speed</field>
+			<field type="float" name="yawspeed" units="rad/s">Yaw angular speed</field>
+    	</message>
     </messages>
 
 </mavlink>
