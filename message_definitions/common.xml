@@ -4392,6 +4392,7 @@
     <message id="30" name="ATTITUDE">
       <description>The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right).</description>
       <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
+      <field type="uint8_t" name="attitude_id">Attitude id</field>
       <field type="float" name="roll" units="rad">Roll angle (-pi..+pi)</field>
       <field type="float" name="pitch" units="rad">Pitch angle (-pi..+pi)</field>
       <field type="float" name="yaw" units="rad">Yaw angle (-pi..+pi)</field>
