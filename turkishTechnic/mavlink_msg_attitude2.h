@@ -12,7 +12,7 @@ typedef struct __mavlink_attitude2_t {
  float rollspeed; /*< [rad/s] Roll angular speed*/
  float pitchspeed; /*< [rad/s] Pitch angular speed*/
  float yawspeed; /*< [rad/s] Yaw angular speed*/
- uint8_t attitude_id; /*<  Attitude Id.*/
+ uint8_t attitude_id; /*<  Attitude source id, 1:EKF2, 2=INSP, 3=Other FCS*/
 } mavlink_attitude2_t;
 
 #define MAVLINK_MSG_ID_ATTITUDE2_LEN 29
@@ -63,7 +63,7 @@ typedef struct __mavlink_attitude2_t {
  * @param msg The MAVLink message to compress the data into
  *
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param attitude_id  Attitude Id.
+ * @param attitude_id  Attitude source id, 1:EKF2, 2=INSP, 3=Other FCS
  * @param roll [rad] Roll angle (-pi..+pi)
  * @param pitch [rad] Pitch angle (-pi..+pi)
  * @param yaw [rad] Yaw angle (-pi..+pi)
@@ -112,7 +112,7 @@ static inline uint16_t mavlink_msg_attitude2_pack(uint8_t system_id, uint8_t com
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param attitude_id  Attitude Id.
+ * @param attitude_id  Attitude source id, 1:EKF2, 2=INSP, 3=Other FCS
  * @param roll [rad] Roll angle (-pi..+pi)
  * @param pitch [rad] Pitch angle (-pi..+pi)
  * @param yaw [rad] Yaw angle (-pi..+pi)
@@ -187,7 +187,7 @@ static inline uint16_t mavlink_msg_attitude2_encode_chan(uint8_t system_id, uint
  * @param chan MAVLink channel to send the message
  *
  * @param time_boot_ms [ms] Timestamp (time since system boot).
- * @param attitude_id  Attitude Id.
+ * @param attitude_id  Attitude source id, 1:EKF2, 2=INSP, 3=Other FCS
  * @param roll [rad] Roll angle (-pi..+pi)
  * @param pitch [rad] Pitch angle (-pi..+pi)
  * @param yaw [rad] Yaw angle (-pi..+pi)
@@ -296,7 +296,7 @@ static inline uint32_t mavlink_msg_attitude2_get_time_boot_ms(const mavlink_mess
 /**
  * @brief Get field attitude_id from attitude2 message
  *
- * @return  Attitude Id.
+ * @return  Attitude source id, 1:EKF2, 2=INSP, 3=Other FCS
  */
 static inline uint8_t mavlink_msg_attitude2_get_attitude_id(const mavlink_message_t* msg)
 {

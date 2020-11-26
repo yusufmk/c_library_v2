@@ -13,7 +13,7 @@
         <!-- Messages are defined here (optional) -->
 		<message id="13000" name="MVL_VEHICLE_STATUS">
 			<description>mavlink msg version of vehicle_status orb msg, it will be used to transfer inner status of px4 with redundant px4.</description>
-			<field type="uint64" name="timestamp">Timestamp iste</field>
+			<field type="uint64_t" name="timestamp">Timestamp iste</field>
 			<field type="uint32_t" name="onboard_control_sensors_present">present sensors</field>
 			<field type="uint32_t" name="onboard_control_sensors_enabled">enabled sensors</field>
 			<field type="uint32_t" name="onboard_control_sensors_health">sensor health</field>
@@ -40,13 +40,28 @@
 		<message id="13001" name="ATTITUDE2">
 			<description>The attitude(2) in the aeronautical frame (right-handed, Z-down, X-front, Y-right).</description>
 			<field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
-			<field type="uint8_t" name="attitude_id">Attitude Id.</field>
+			<field type="uint8_t" name="attitude_id">Attitude source id, 1:EKF2, 2=INSP, 3=Other FCS</field>
 			<field type="float" name="roll" units="rad">Roll angle (-pi..+pi)</field>
 			<field type="float" name="pitch" units="rad">Pitch angle (-pi..+pi)</field>
 			<field type="float" name="yaw" units="rad">Yaw angle (-pi..+pi)</field>
 			<field type="float" name="rollspeed" units="rad/s">Roll angular speed</field>
 			<field type="float" name="pitchspeed" units="rad/s">Pitch angular speed</field>
 			<field type="float" name="yawspeed" units="rad/s">Yaw angular speed</field>
+    	</message>
+
+		<message id="13002" name="GLOBAL_POSITION_INT2">
+			<description>The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed, Z-up). It
+					is designed as scaled integer message since the resolution of float is not sufficient.</description>
+			<field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
+			<field type="uint8_t" name="gpos_id">global position source id, 1:EKF2, 2=INSP, 3=Other FCS </field>
+			<field type="int32_t" name="lat" units="degE7">Latitude, expressed</field>
+			<field type="int32_t" name="lon" units="degE7">Longitude, expressed</field>
+			<field type="int32_t" name="alt" units="mm">Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.</field>
+			<field type="int32_t" name="relative_alt" units="mm">Altitude above ground</field>
+			<field type="int16_t" name="vx" units="cm/s">Ground X Speed (Latitude, positive north)</field>
+			<field type="int16_t" name="vy" units="cm/s">Ground Y Speed (Longitude, positive east)</field>
+			<field type="int16_t" name="vz" units="cm/s">Ground Z Speed (Altitude, positive down)</field>
+			<field type="uint16_t" name="hdg" units="cdeg">Vehicle heading (yaw angle), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX</field>
     	</message>
     </messages>
 
