@@ -9,6 +9,7 @@ typedef struct __mavlink_mvl_vehicle_status_t {
  uint32_t onboard_control_sensors_present; /*<  present sensors*/
  uint32_t onboard_control_sensors_enabled; /*<  enabled sensors*/
  uint32_t onboard_control_sensors_health; /*<  sensor health*/
+ uint8_t internal_state; /*<  Commander/main state*/
  uint8_t nav_state; /*<  Navigator state*/
  uint8_t arming_state; /*<  Arming state*/
  uint8_t hil_state; /*<  hil state*/
@@ -29,13 +30,13 @@ typedef struct __mavlink_mvl_vehicle_status_t {
  uint8_t mission_failure; /*<  mission_failure*/
 } mavlink_mvl_vehicle_status_t;
 
-#define MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN 38
-#define MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_MIN_LEN 38
-#define MAVLINK_MSG_ID_13000_LEN 38
-#define MAVLINK_MSG_ID_13000_MIN_LEN 38
+#define MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN 39
+#define MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_MIN_LEN 39
+#define MAVLINK_MSG_ID_13000_LEN 39
+#define MAVLINK_MSG_ID_13000_MIN_LEN 39
 
-#define MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_CRC 14
-#define MAVLINK_MSG_ID_13000_CRC 14
+#define MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_CRC 124
+#define MAVLINK_MSG_ID_13000_CRC 124
 
 
 
@@ -43,57 +44,59 @@ typedef struct __mavlink_mvl_vehicle_status_t {
 #define MAVLINK_MESSAGE_INFO_MVL_VEHICLE_STATUS { \
     13000, \
     "MVL_VEHICLE_STATUS", \
-    22, \
+    23, \
     {  { "timestamp", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_mvl_vehicle_status_t, timestamp) }, \
          { "onboard_control_sensors_present", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_mvl_vehicle_status_t, onboard_control_sensors_present) }, \
          { "onboard_control_sensors_enabled", NULL, MAVLINK_TYPE_UINT32_T, 0, 12, offsetof(mavlink_mvl_vehicle_status_t, onboard_control_sensors_enabled) }, \
          { "onboard_control_sensors_health", NULL, MAVLINK_TYPE_UINT32_T, 0, 16, offsetof(mavlink_mvl_vehicle_status_t, onboard_control_sensors_health) }, \
-         { "nav_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_mvl_vehicle_status_t, nav_state) }, \
-         { "arming_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_mvl_vehicle_status_t, arming_state) }, \
-         { "hil_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_mvl_vehicle_status_t, hil_state) }, \
-         { "red_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_mvl_vehicle_status_t, red_state) }, \
-         { "failsafe", NULL, MAVLINK_TYPE_UINT8_T, 0, 24, offsetof(mavlink_mvl_vehicle_status_t, failsafe) }, \
-         { "system_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 25, offsetof(mavlink_mvl_vehicle_status_t, system_type) }, \
-         { "vehicle_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 26, offsetof(mavlink_mvl_vehicle_status_t, vehicle_type) }, \
-         { "is_vtol", NULL, MAVLINK_TYPE_UINT8_T, 0, 27, offsetof(mavlink_mvl_vehicle_status_t, is_vtol) }, \
-         { "vtol_fw_permanent_stab", NULL, MAVLINK_TYPE_UINT8_T, 0, 28, offsetof(mavlink_mvl_vehicle_status_t, vtol_fw_permanent_stab) }, \
-         { "in_transition_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 29, offsetof(mavlink_mvl_vehicle_status_t, in_transition_mode) }, \
-         { "in_transition_to_fw", NULL, MAVLINK_TYPE_UINT8_T, 0, 30, offsetof(mavlink_mvl_vehicle_status_t, in_transition_to_fw) }, \
-         { "rc_signal_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 31, offsetof(mavlink_mvl_vehicle_status_t, rc_signal_lost) }, \
-         { "rc_input_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_mvl_vehicle_status_t, rc_input_mode) }, \
-         { "data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 33, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost) }, \
-         { "data_link_lost_counter", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost_counter) }, \
-         { "high_latency_data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_mvl_vehicle_status_t, high_latency_data_link_lost) }, \
-         { "engine_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 36, offsetof(mavlink_mvl_vehicle_status_t, engine_failure) }, \
-         { "mission_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 37, offsetof(mavlink_mvl_vehicle_status_t, mission_failure) }, \
+         { "internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_mvl_vehicle_status_t, internal_state) }, \
+         { "nav_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_mvl_vehicle_status_t, nav_state) }, \
+         { "arming_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_mvl_vehicle_status_t, arming_state) }, \
+         { "hil_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_mvl_vehicle_status_t, hil_state) }, \
+         { "red_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 24, offsetof(mavlink_mvl_vehicle_status_t, red_state) }, \
+         { "failsafe", NULL, MAVLINK_TYPE_UINT8_T, 0, 25, offsetof(mavlink_mvl_vehicle_status_t, failsafe) }, \
+         { "system_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 26, offsetof(mavlink_mvl_vehicle_status_t, system_type) }, \
+         { "vehicle_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 27, offsetof(mavlink_mvl_vehicle_status_t, vehicle_type) }, \
+         { "is_vtol", NULL, MAVLINK_TYPE_UINT8_T, 0, 28, offsetof(mavlink_mvl_vehicle_status_t, is_vtol) }, \
+         { "vtol_fw_permanent_stab", NULL, MAVLINK_TYPE_UINT8_T, 0, 29, offsetof(mavlink_mvl_vehicle_status_t, vtol_fw_permanent_stab) }, \
+         { "in_transition_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 30, offsetof(mavlink_mvl_vehicle_status_t, in_transition_mode) }, \
+         { "in_transition_to_fw", NULL, MAVLINK_TYPE_UINT8_T, 0, 31, offsetof(mavlink_mvl_vehicle_status_t, in_transition_to_fw) }, \
+         { "rc_signal_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_mvl_vehicle_status_t, rc_signal_lost) }, \
+         { "rc_input_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 33, offsetof(mavlink_mvl_vehicle_status_t, rc_input_mode) }, \
+         { "data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost) }, \
+         { "data_link_lost_counter", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost_counter) }, \
+         { "high_latency_data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 36, offsetof(mavlink_mvl_vehicle_status_t, high_latency_data_link_lost) }, \
+         { "engine_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 37, offsetof(mavlink_mvl_vehicle_status_t, engine_failure) }, \
+         { "mission_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 38, offsetof(mavlink_mvl_vehicle_status_t, mission_failure) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_MVL_VEHICLE_STATUS { \
     "MVL_VEHICLE_STATUS", \
-    22, \
+    23, \
     {  { "timestamp", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_mvl_vehicle_status_t, timestamp) }, \
          { "onboard_control_sensors_present", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_mvl_vehicle_status_t, onboard_control_sensors_present) }, \
          { "onboard_control_sensors_enabled", NULL, MAVLINK_TYPE_UINT32_T, 0, 12, offsetof(mavlink_mvl_vehicle_status_t, onboard_control_sensors_enabled) }, \
          { "onboard_control_sensors_health", NULL, MAVLINK_TYPE_UINT32_T, 0, 16, offsetof(mavlink_mvl_vehicle_status_t, onboard_control_sensors_health) }, \
-         { "nav_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_mvl_vehicle_status_t, nav_state) }, \
-         { "arming_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_mvl_vehicle_status_t, arming_state) }, \
-         { "hil_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_mvl_vehicle_status_t, hil_state) }, \
-         { "red_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_mvl_vehicle_status_t, red_state) }, \
-         { "failsafe", NULL, MAVLINK_TYPE_UINT8_T, 0, 24, offsetof(mavlink_mvl_vehicle_status_t, failsafe) }, \
-         { "system_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 25, offsetof(mavlink_mvl_vehicle_status_t, system_type) }, \
-         { "vehicle_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 26, offsetof(mavlink_mvl_vehicle_status_t, vehicle_type) }, \
-         { "is_vtol", NULL, MAVLINK_TYPE_UINT8_T, 0, 27, offsetof(mavlink_mvl_vehicle_status_t, is_vtol) }, \
-         { "vtol_fw_permanent_stab", NULL, MAVLINK_TYPE_UINT8_T, 0, 28, offsetof(mavlink_mvl_vehicle_status_t, vtol_fw_permanent_stab) }, \
-         { "in_transition_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 29, offsetof(mavlink_mvl_vehicle_status_t, in_transition_mode) }, \
-         { "in_transition_to_fw", NULL, MAVLINK_TYPE_UINT8_T, 0, 30, offsetof(mavlink_mvl_vehicle_status_t, in_transition_to_fw) }, \
-         { "rc_signal_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 31, offsetof(mavlink_mvl_vehicle_status_t, rc_signal_lost) }, \
-         { "rc_input_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_mvl_vehicle_status_t, rc_input_mode) }, \
-         { "data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 33, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost) }, \
-         { "data_link_lost_counter", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost_counter) }, \
-         { "high_latency_data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_mvl_vehicle_status_t, high_latency_data_link_lost) }, \
-         { "engine_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 36, offsetof(mavlink_mvl_vehicle_status_t, engine_failure) }, \
-         { "mission_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 37, offsetof(mavlink_mvl_vehicle_status_t, mission_failure) }, \
+         { "internal_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_mvl_vehicle_status_t, internal_state) }, \
+         { "nav_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_mvl_vehicle_status_t, nav_state) }, \
+         { "arming_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_mvl_vehicle_status_t, arming_state) }, \
+         { "hil_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 23, offsetof(mavlink_mvl_vehicle_status_t, hil_state) }, \
+         { "red_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 24, offsetof(mavlink_mvl_vehicle_status_t, red_state) }, \
+         { "failsafe", NULL, MAVLINK_TYPE_UINT8_T, 0, 25, offsetof(mavlink_mvl_vehicle_status_t, failsafe) }, \
+         { "system_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 26, offsetof(mavlink_mvl_vehicle_status_t, system_type) }, \
+         { "vehicle_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 27, offsetof(mavlink_mvl_vehicle_status_t, vehicle_type) }, \
+         { "is_vtol", NULL, MAVLINK_TYPE_UINT8_T, 0, 28, offsetof(mavlink_mvl_vehicle_status_t, is_vtol) }, \
+         { "vtol_fw_permanent_stab", NULL, MAVLINK_TYPE_UINT8_T, 0, 29, offsetof(mavlink_mvl_vehicle_status_t, vtol_fw_permanent_stab) }, \
+         { "in_transition_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 30, offsetof(mavlink_mvl_vehicle_status_t, in_transition_mode) }, \
+         { "in_transition_to_fw", NULL, MAVLINK_TYPE_UINT8_T, 0, 31, offsetof(mavlink_mvl_vehicle_status_t, in_transition_to_fw) }, \
+         { "rc_signal_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_mvl_vehicle_status_t, rc_signal_lost) }, \
+         { "rc_input_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 33, offsetof(mavlink_mvl_vehicle_status_t, rc_input_mode) }, \
+         { "data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost) }, \
+         { "data_link_lost_counter", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_mvl_vehicle_status_t, data_link_lost_counter) }, \
+         { "high_latency_data_link_lost", NULL, MAVLINK_TYPE_UINT8_T, 0, 36, offsetof(mavlink_mvl_vehicle_status_t, high_latency_data_link_lost) }, \
+         { "engine_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 37, offsetof(mavlink_mvl_vehicle_status_t, engine_failure) }, \
+         { "mission_failure", NULL, MAVLINK_TYPE_UINT8_T, 0, 38, offsetof(mavlink_mvl_vehicle_status_t, mission_failure) }, \
          } \
 }
 #endif
@@ -108,6 +111,7 @@ typedef struct __mavlink_mvl_vehicle_status_t {
  * @param onboard_control_sensors_present  present sensors
  * @param onboard_control_sensors_enabled  enabled sensors
  * @param onboard_control_sensors_health  sensor health
+ * @param internal_state  Commander/main state
  * @param nav_state  Navigator state
  * @param arming_state  Arming state
  * @param hil_state  hil state
@@ -129,7 +133,7 @@ typedef struct __mavlink_mvl_vehicle_status_t {
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_mvl_vehicle_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint64_t timestamp, uint32_t onboard_control_sensors_present, uint32_t onboard_control_sensors_enabled, uint32_t onboard_control_sensors_health, uint8_t nav_state, uint8_t arming_state, uint8_t hil_state, uint8_t red_state, uint8_t failsafe, uint8_t system_type, uint8_t vehicle_type, uint8_t is_vtol, uint8_t vtol_fw_permanent_stab, uint8_t in_transition_mode, uint8_t in_transition_to_fw, uint8_t rc_signal_lost, uint8_t rc_input_mode, uint8_t data_link_lost, uint8_t data_link_lost_counter, uint8_t high_latency_data_link_lost, uint8_t engine_failure, uint8_t mission_failure)
+                               uint64_t timestamp, uint32_t onboard_control_sensors_present, uint32_t onboard_control_sensors_enabled, uint32_t onboard_control_sensors_health, uint8_t internal_state, uint8_t nav_state, uint8_t arming_state, uint8_t hil_state, uint8_t red_state, uint8_t failsafe, uint8_t system_type, uint8_t vehicle_type, uint8_t is_vtol, uint8_t vtol_fw_permanent_stab, uint8_t in_transition_mode, uint8_t in_transition_to_fw, uint8_t rc_signal_lost, uint8_t rc_input_mode, uint8_t data_link_lost, uint8_t data_link_lost_counter, uint8_t high_latency_data_link_lost, uint8_t engine_failure, uint8_t mission_failure)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN];
@@ -137,24 +141,25 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack(uint8_t system_id, ui
     _mav_put_uint32_t(buf, 8, onboard_control_sensors_present);
     _mav_put_uint32_t(buf, 12, onboard_control_sensors_enabled);
     _mav_put_uint32_t(buf, 16, onboard_control_sensors_health);
-    _mav_put_uint8_t(buf, 20, nav_state);
-    _mav_put_uint8_t(buf, 21, arming_state);
-    _mav_put_uint8_t(buf, 22, hil_state);
-    _mav_put_uint8_t(buf, 23, red_state);
-    _mav_put_uint8_t(buf, 24, failsafe);
-    _mav_put_uint8_t(buf, 25, system_type);
-    _mav_put_uint8_t(buf, 26, vehicle_type);
-    _mav_put_uint8_t(buf, 27, is_vtol);
-    _mav_put_uint8_t(buf, 28, vtol_fw_permanent_stab);
-    _mav_put_uint8_t(buf, 29, in_transition_mode);
-    _mav_put_uint8_t(buf, 30, in_transition_to_fw);
-    _mav_put_uint8_t(buf, 31, rc_signal_lost);
-    _mav_put_uint8_t(buf, 32, rc_input_mode);
-    _mav_put_uint8_t(buf, 33, data_link_lost);
-    _mav_put_uint8_t(buf, 34, data_link_lost_counter);
-    _mav_put_uint8_t(buf, 35, high_latency_data_link_lost);
-    _mav_put_uint8_t(buf, 36, engine_failure);
-    _mav_put_uint8_t(buf, 37, mission_failure);
+    _mav_put_uint8_t(buf, 20, internal_state);
+    _mav_put_uint8_t(buf, 21, nav_state);
+    _mav_put_uint8_t(buf, 22, arming_state);
+    _mav_put_uint8_t(buf, 23, hil_state);
+    _mav_put_uint8_t(buf, 24, red_state);
+    _mav_put_uint8_t(buf, 25, failsafe);
+    _mav_put_uint8_t(buf, 26, system_type);
+    _mav_put_uint8_t(buf, 27, vehicle_type);
+    _mav_put_uint8_t(buf, 28, is_vtol);
+    _mav_put_uint8_t(buf, 29, vtol_fw_permanent_stab);
+    _mav_put_uint8_t(buf, 30, in_transition_mode);
+    _mav_put_uint8_t(buf, 31, in_transition_to_fw);
+    _mav_put_uint8_t(buf, 32, rc_signal_lost);
+    _mav_put_uint8_t(buf, 33, rc_input_mode);
+    _mav_put_uint8_t(buf, 34, data_link_lost);
+    _mav_put_uint8_t(buf, 35, data_link_lost_counter);
+    _mav_put_uint8_t(buf, 36, high_latency_data_link_lost);
+    _mav_put_uint8_t(buf, 37, engine_failure);
+    _mav_put_uint8_t(buf, 38, mission_failure);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN);
 #else
@@ -163,6 +168,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack(uint8_t system_id, ui
     packet.onboard_control_sensors_present = onboard_control_sensors_present;
     packet.onboard_control_sensors_enabled = onboard_control_sensors_enabled;
     packet.onboard_control_sensors_health = onboard_control_sensors_health;
+    packet.internal_state = internal_state;
     packet.nav_state = nav_state;
     packet.arming_state = arming_state;
     packet.hil_state = hil_state;
@@ -199,6 +205,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack(uint8_t system_id, ui
  * @param onboard_control_sensors_present  present sensors
  * @param onboard_control_sensors_enabled  enabled sensors
  * @param onboard_control_sensors_health  sensor health
+ * @param internal_state  Commander/main state
  * @param nav_state  Navigator state
  * @param arming_state  Arming state
  * @param hil_state  hil state
@@ -221,7 +228,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_mvl_vehicle_status_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint64_t timestamp,uint32_t onboard_control_sensors_present,uint32_t onboard_control_sensors_enabled,uint32_t onboard_control_sensors_health,uint8_t nav_state,uint8_t arming_state,uint8_t hil_state,uint8_t red_state,uint8_t failsafe,uint8_t system_type,uint8_t vehicle_type,uint8_t is_vtol,uint8_t vtol_fw_permanent_stab,uint8_t in_transition_mode,uint8_t in_transition_to_fw,uint8_t rc_signal_lost,uint8_t rc_input_mode,uint8_t data_link_lost,uint8_t data_link_lost_counter,uint8_t high_latency_data_link_lost,uint8_t engine_failure,uint8_t mission_failure)
+                                   uint64_t timestamp,uint32_t onboard_control_sensors_present,uint32_t onboard_control_sensors_enabled,uint32_t onboard_control_sensors_health,uint8_t internal_state,uint8_t nav_state,uint8_t arming_state,uint8_t hil_state,uint8_t red_state,uint8_t failsafe,uint8_t system_type,uint8_t vehicle_type,uint8_t is_vtol,uint8_t vtol_fw_permanent_stab,uint8_t in_transition_mode,uint8_t in_transition_to_fw,uint8_t rc_signal_lost,uint8_t rc_input_mode,uint8_t data_link_lost,uint8_t data_link_lost_counter,uint8_t high_latency_data_link_lost,uint8_t engine_failure,uint8_t mission_failure)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN];
@@ -229,24 +236,25 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack_chan(uint8_t system_i
     _mav_put_uint32_t(buf, 8, onboard_control_sensors_present);
     _mav_put_uint32_t(buf, 12, onboard_control_sensors_enabled);
     _mav_put_uint32_t(buf, 16, onboard_control_sensors_health);
-    _mav_put_uint8_t(buf, 20, nav_state);
-    _mav_put_uint8_t(buf, 21, arming_state);
-    _mav_put_uint8_t(buf, 22, hil_state);
-    _mav_put_uint8_t(buf, 23, red_state);
-    _mav_put_uint8_t(buf, 24, failsafe);
-    _mav_put_uint8_t(buf, 25, system_type);
-    _mav_put_uint8_t(buf, 26, vehicle_type);
-    _mav_put_uint8_t(buf, 27, is_vtol);
-    _mav_put_uint8_t(buf, 28, vtol_fw_permanent_stab);
-    _mav_put_uint8_t(buf, 29, in_transition_mode);
-    _mav_put_uint8_t(buf, 30, in_transition_to_fw);
-    _mav_put_uint8_t(buf, 31, rc_signal_lost);
-    _mav_put_uint8_t(buf, 32, rc_input_mode);
-    _mav_put_uint8_t(buf, 33, data_link_lost);
-    _mav_put_uint8_t(buf, 34, data_link_lost_counter);
-    _mav_put_uint8_t(buf, 35, high_latency_data_link_lost);
-    _mav_put_uint8_t(buf, 36, engine_failure);
-    _mav_put_uint8_t(buf, 37, mission_failure);
+    _mav_put_uint8_t(buf, 20, internal_state);
+    _mav_put_uint8_t(buf, 21, nav_state);
+    _mav_put_uint8_t(buf, 22, arming_state);
+    _mav_put_uint8_t(buf, 23, hil_state);
+    _mav_put_uint8_t(buf, 24, red_state);
+    _mav_put_uint8_t(buf, 25, failsafe);
+    _mav_put_uint8_t(buf, 26, system_type);
+    _mav_put_uint8_t(buf, 27, vehicle_type);
+    _mav_put_uint8_t(buf, 28, is_vtol);
+    _mav_put_uint8_t(buf, 29, vtol_fw_permanent_stab);
+    _mav_put_uint8_t(buf, 30, in_transition_mode);
+    _mav_put_uint8_t(buf, 31, in_transition_to_fw);
+    _mav_put_uint8_t(buf, 32, rc_signal_lost);
+    _mav_put_uint8_t(buf, 33, rc_input_mode);
+    _mav_put_uint8_t(buf, 34, data_link_lost);
+    _mav_put_uint8_t(buf, 35, data_link_lost_counter);
+    _mav_put_uint8_t(buf, 36, high_latency_data_link_lost);
+    _mav_put_uint8_t(buf, 37, engine_failure);
+    _mav_put_uint8_t(buf, 38, mission_failure);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN);
 #else
@@ -255,6 +263,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack_chan(uint8_t system_i
     packet.onboard_control_sensors_present = onboard_control_sensors_present;
     packet.onboard_control_sensors_enabled = onboard_control_sensors_enabled;
     packet.onboard_control_sensors_health = onboard_control_sensors_health;
+    packet.internal_state = internal_state;
     packet.nav_state = nav_state;
     packet.arming_state = arming_state;
     packet.hil_state = hil_state;
@@ -291,7 +300,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_pack_chan(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_mvl_vehicle_status_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_mvl_vehicle_status_t* mvl_vehicle_status)
 {
-    return mavlink_msg_mvl_vehicle_status_pack(system_id, component_id, msg, mvl_vehicle_status->timestamp, mvl_vehicle_status->onboard_control_sensors_present, mvl_vehicle_status->onboard_control_sensors_enabled, mvl_vehicle_status->onboard_control_sensors_health, mvl_vehicle_status->nav_state, mvl_vehicle_status->arming_state, mvl_vehicle_status->hil_state, mvl_vehicle_status->red_state, mvl_vehicle_status->failsafe, mvl_vehicle_status->system_type, mvl_vehicle_status->vehicle_type, mvl_vehicle_status->is_vtol, mvl_vehicle_status->vtol_fw_permanent_stab, mvl_vehicle_status->in_transition_mode, mvl_vehicle_status->in_transition_to_fw, mvl_vehicle_status->rc_signal_lost, mvl_vehicle_status->rc_input_mode, mvl_vehicle_status->data_link_lost, mvl_vehicle_status->data_link_lost_counter, mvl_vehicle_status->high_latency_data_link_lost, mvl_vehicle_status->engine_failure, mvl_vehicle_status->mission_failure);
+    return mavlink_msg_mvl_vehicle_status_pack(system_id, component_id, msg, mvl_vehicle_status->timestamp, mvl_vehicle_status->onboard_control_sensors_present, mvl_vehicle_status->onboard_control_sensors_enabled, mvl_vehicle_status->onboard_control_sensors_health, mvl_vehicle_status->internal_state, mvl_vehicle_status->nav_state, mvl_vehicle_status->arming_state, mvl_vehicle_status->hil_state, mvl_vehicle_status->red_state, mvl_vehicle_status->failsafe, mvl_vehicle_status->system_type, mvl_vehicle_status->vehicle_type, mvl_vehicle_status->is_vtol, mvl_vehicle_status->vtol_fw_permanent_stab, mvl_vehicle_status->in_transition_mode, mvl_vehicle_status->in_transition_to_fw, mvl_vehicle_status->rc_signal_lost, mvl_vehicle_status->rc_input_mode, mvl_vehicle_status->data_link_lost, mvl_vehicle_status->data_link_lost_counter, mvl_vehicle_status->high_latency_data_link_lost, mvl_vehicle_status->engine_failure, mvl_vehicle_status->mission_failure);
 }
 
 /**
@@ -305,7 +314,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_encode(uint8_t system_id, 
  */
 static inline uint16_t mavlink_msg_mvl_vehicle_status_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_mvl_vehicle_status_t* mvl_vehicle_status)
 {
-    return mavlink_msg_mvl_vehicle_status_pack_chan(system_id, component_id, chan, msg, mvl_vehicle_status->timestamp, mvl_vehicle_status->onboard_control_sensors_present, mvl_vehicle_status->onboard_control_sensors_enabled, mvl_vehicle_status->onboard_control_sensors_health, mvl_vehicle_status->nav_state, mvl_vehicle_status->arming_state, mvl_vehicle_status->hil_state, mvl_vehicle_status->red_state, mvl_vehicle_status->failsafe, mvl_vehicle_status->system_type, mvl_vehicle_status->vehicle_type, mvl_vehicle_status->is_vtol, mvl_vehicle_status->vtol_fw_permanent_stab, mvl_vehicle_status->in_transition_mode, mvl_vehicle_status->in_transition_to_fw, mvl_vehicle_status->rc_signal_lost, mvl_vehicle_status->rc_input_mode, mvl_vehicle_status->data_link_lost, mvl_vehicle_status->data_link_lost_counter, mvl_vehicle_status->high_latency_data_link_lost, mvl_vehicle_status->engine_failure, mvl_vehicle_status->mission_failure);
+    return mavlink_msg_mvl_vehicle_status_pack_chan(system_id, component_id, chan, msg, mvl_vehicle_status->timestamp, mvl_vehicle_status->onboard_control_sensors_present, mvl_vehicle_status->onboard_control_sensors_enabled, mvl_vehicle_status->onboard_control_sensors_health, mvl_vehicle_status->internal_state, mvl_vehicle_status->nav_state, mvl_vehicle_status->arming_state, mvl_vehicle_status->hil_state, mvl_vehicle_status->red_state, mvl_vehicle_status->failsafe, mvl_vehicle_status->system_type, mvl_vehicle_status->vehicle_type, mvl_vehicle_status->is_vtol, mvl_vehicle_status->vtol_fw_permanent_stab, mvl_vehicle_status->in_transition_mode, mvl_vehicle_status->in_transition_to_fw, mvl_vehicle_status->rc_signal_lost, mvl_vehicle_status->rc_input_mode, mvl_vehicle_status->data_link_lost, mvl_vehicle_status->data_link_lost_counter, mvl_vehicle_status->high_latency_data_link_lost, mvl_vehicle_status->engine_failure, mvl_vehicle_status->mission_failure);
 }
 
 /**
@@ -316,6 +325,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_encode_chan(uint8_t system
  * @param onboard_control_sensors_present  present sensors
  * @param onboard_control_sensors_enabled  enabled sensors
  * @param onboard_control_sensors_health  sensor health
+ * @param internal_state  Commander/main state
  * @param nav_state  Navigator state
  * @param arming_state  Arming state
  * @param hil_state  hil state
@@ -337,7 +347,7 @@ static inline uint16_t mavlink_msg_mvl_vehicle_status_encode_chan(uint8_t system
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_mvl_vehicle_status_send(mavlink_channel_t chan, uint64_t timestamp, uint32_t onboard_control_sensors_present, uint32_t onboard_control_sensors_enabled, uint32_t onboard_control_sensors_health, uint8_t nav_state, uint8_t arming_state, uint8_t hil_state, uint8_t red_state, uint8_t failsafe, uint8_t system_type, uint8_t vehicle_type, uint8_t is_vtol, uint8_t vtol_fw_permanent_stab, uint8_t in_transition_mode, uint8_t in_transition_to_fw, uint8_t rc_signal_lost, uint8_t rc_input_mode, uint8_t data_link_lost, uint8_t data_link_lost_counter, uint8_t high_latency_data_link_lost, uint8_t engine_failure, uint8_t mission_failure)
+static inline void mavlink_msg_mvl_vehicle_status_send(mavlink_channel_t chan, uint64_t timestamp, uint32_t onboard_control_sensors_present, uint32_t onboard_control_sensors_enabled, uint32_t onboard_control_sensors_health, uint8_t internal_state, uint8_t nav_state, uint8_t arming_state, uint8_t hil_state, uint8_t red_state, uint8_t failsafe, uint8_t system_type, uint8_t vehicle_type, uint8_t is_vtol, uint8_t vtol_fw_permanent_stab, uint8_t in_transition_mode, uint8_t in_transition_to_fw, uint8_t rc_signal_lost, uint8_t rc_input_mode, uint8_t data_link_lost, uint8_t data_link_lost_counter, uint8_t high_latency_data_link_lost, uint8_t engine_failure, uint8_t mission_failure)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN];
@@ -345,24 +355,25 @@ static inline void mavlink_msg_mvl_vehicle_status_send(mavlink_channel_t chan, u
     _mav_put_uint32_t(buf, 8, onboard_control_sensors_present);
     _mav_put_uint32_t(buf, 12, onboard_control_sensors_enabled);
     _mav_put_uint32_t(buf, 16, onboard_control_sensors_health);
-    _mav_put_uint8_t(buf, 20, nav_state);
-    _mav_put_uint8_t(buf, 21, arming_state);
-    _mav_put_uint8_t(buf, 22, hil_state);
-    _mav_put_uint8_t(buf, 23, red_state);
-    _mav_put_uint8_t(buf, 24, failsafe);
-    _mav_put_uint8_t(buf, 25, system_type);
-    _mav_put_uint8_t(buf, 26, vehicle_type);
-    _mav_put_uint8_t(buf, 27, is_vtol);
-    _mav_put_uint8_t(buf, 28, vtol_fw_permanent_stab);
-    _mav_put_uint8_t(buf, 29, in_transition_mode);
-    _mav_put_uint8_t(buf, 30, in_transition_to_fw);
-    _mav_put_uint8_t(buf, 31, rc_signal_lost);
-    _mav_put_uint8_t(buf, 32, rc_input_mode);
-    _mav_put_uint8_t(buf, 33, data_link_lost);
-    _mav_put_uint8_t(buf, 34, data_link_lost_counter);
-    _mav_put_uint8_t(buf, 35, high_latency_data_link_lost);
-    _mav_put_uint8_t(buf, 36, engine_failure);
-    _mav_put_uint8_t(buf, 37, mission_failure);
+    _mav_put_uint8_t(buf, 20, internal_state);
+    _mav_put_uint8_t(buf, 21, nav_state);
+    _mav_put_uint8_t(buf, 22, arming_state);
+    _mav_put_uint8_t(buf, 23, hil_state);
+    _mav_put_uint8_t(buf, 24, red_state);
+    _mav_put_uint8_t(buf, 25, failsafe);
+    _mav_put_uint8_t(buf, 26, system_type);
+    _mav_put_uint8_t(buf, 27, vehicle_type);
+    _mav_put_uint8_t(buf, 28, is_vtol);
+    _mav_put_uint8_t(buf, 29, vtol_fw_permanent_stab);
+    _mav_put_uint8_t(buf, 30, in_transition_mode);
+    _mav_put_uint8_t(buf, 31, in_transition_to_fw);
+    _mav_put_uint8_t(buf, 32, rc_signal_lost);
+    _mav_put_uint8_t(buf, 33, rc_input_mode);
+    _mav_put_uint8_t(buf, 34, data_link_lost);
+    _mav_put_uint8_t(buf, 35, data_link_lost_counter);
+    _mav_put_uint8_t(buf, 36, high_latency_data_link_lost);
+    _mav_put_uint8_t(buf, 37, engine_failure);
+    _mav_put_uint8_t(buf, 38, mission_failure);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS, buf, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_MIN_LEN, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_CRC);
 #else
@@ -371,6 +382,7 @@ static inline void mavlink_msg_mvl_vehicle_status_send(mavlink_channel_t chan, u
     packet.onboard_control_sensors_present = onboard_control_sensors_present;
     packet.onboard_control_sensors_enabled = onboard_control_sensors_enabled;
     packet.onboard_control_sensors_health = onboard_control_sensors_health;
+    packet.internal_state = internal_state;
     packet.nav_state = nav_state;
     packet.arming_state = arming_state;
     packet.hil_state = hil_state;
@@ -402,7 +414,7 @@ static inline void mavlink_msg_mvl_vehicle_status_send(mavlink_channel_t chan, u
 static inline void mavlink_msg_mvl_vehicle_status_send_struct(mavlink_channel_t chan, const mavlink_mvl_vehicle_status_t* mvl_vehicle_status)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_mvl_vehicle_status_send(chan, mvl_vehicle_status->timestamp, mvl_vehicle_status->onboard_control_sensors_present, mvl_vehicle_status->onboard_control_sensors_enabled, mvl_vehicle_status->onboard_control_sensors_health, mvl_vehicle_status->nav_state, mvl_vehicle_status->arming_state, mvl_vehicle_status->hil_state, mvl_vehicle_status->red_state, mvl_vehicle_status->failsafe, mvl_vehicle_status->system_type, mvl_vehicle_status->vehicle_type, mvl_vehicle_status->is_vtol, mvl_vehicle_status->vtol_fw_permanent_stab, mvl_vehicle_status->in_transition_mode, mvl_vehicle_status->in_transition_to_fw, mvl_vehicle_status->rc_signal_lost, mvl_vehicle_status->rc_input_mode, mvl_vehicle_status->data_link_lost, mvl_vehicle_status->data_link_lost_counter, mvl_vehicle_status->high_latency_data_link_lost, mvl_vehicle_status->engine_failure, mvl_vehicle_status->mission_failure);
+    mavlink_msg_mvl_vehicle_status_send(chan, mvl_vehicle_status->timestamp, mvl_vehicle_status->onboard_control_sensors_present, mvl_vehicle_status->onboard_control_sensors_enabled, mvl_vehicle_status->onboard_control_sensors_health, mvl_vehicle_status->internal_state, mvl_vehicle_status->nav_state, mvl_vehicle_status->arming_state, mvl_vehicle_status->hil_state, mvl_vehicle_status->red_state, mvl_vehicle_status->failsafe, mvl_vehicle_status->system_type, mvl_vehicle_status->vehicle_type, mvl_vehicle_status->is_vtol, mvl_vehicle_status->vtol_fw_permanent_stab, mvl_vehicle_status->in_transition_mode, mvl_vehicle_status->in_transition_to_fw, mvl_vehicle_status->rc_signal_lost, mvl_vehicle_status->rc_input_mode, mvl_vehicle_status->data_link_lost, mvl_vehicle_status->data_link_lost_counter, mvl_vehicle_status->high_latency_data_link_lost, mvl_vehicle_status->engine_failure, mvl_vehicle_status->mission_failure);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS, (const char *)mvl_vehicle_status, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_MIN_LEN, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_CRC);
 #endif
@@ -416,7 +428,7 @@ static inline void mavlink_msg_mvl_vehicle_status_send_struct(mavlink_channel_t 
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_mvl_vehicle_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t timestamp, uint32_t onboard_control_sensors_present, uint32_t onboard_control_sensors_enabled, uint32_t onboard_control_sensors_health, uint8_t nav_state, uint8_t arming_state, uint8_t hil_state, uint8_t red_state, uint8_t failsafe, uint8_t system_type, uint8_t vehicle_type, uint8_t is_vtol, uint8_t vtol_fw_permanent_stab, uint8_t in_transition_mode, uint8_t in_transition_to_fw, uint8_t rc_signal_lost, uint8_t rc_input_mode, uint8_t data_link_lost, uint8_t data_link_lost_counter, uint8_t high_latency_data_link_lost, uint8_t engine_failure, uint8_t mission_failure)
+static inline void mavlink_msg_mvl_vehicle_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t timestamp, uint32_t onboard_control_sensors_present, uint32_t onboard_control_sensors_enabled, uint32_t onboard_control_sensors_health, uint8_t internal_state, uint8_t nav_state, uint8_t arming_state, uint8_t hil_state, uint8_t red_state, uint8_t failsafe, uint8_t system_type, uint8_t vehicle_type, uint8_t is_vtol, uint8_t vtol_fw_permanent_stab, uint8_t in_transition_mode, uint8_t in_transition_to_fw, uint8_t rc_signal_lost, uint8_t rc_input_mode, uint8_t data_link_lost, uint8_t data_link_lost_counter, uint8_t high_latency_data_link_lost, uint8_t engine_failure, uint8_t mission_failure)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -424,24 +436,25 @@ static inline void mavlink_msg_mvl_vehicle_status_send_buf(mavlink_message_t *ms
     _mav_put_uint32_t(buf, 8, onboard_control_sensors_present);
     _mav_put_uint32_t(buf, 12, onboard_control_sensors_enabled);
     _mav_put_uint32_t(buf, 16, onboard_control_sensors_health);
-    _mav_put_uint8_t(buf, 20, nav_state);
-    _mav_put_uint8_t(buf, 21, arming_state);
-    _mav_put_uint8_t(buf, 22, hil_state);
-    _mav_put_uint8_t(buf, 23, red_state);
-    _mav_put_uint8_t(buf, 24, failsafe);
-    _mav_put_uint8_t(buf, 25, system_type);
-    _mav_put_uint8_t(buf, 26, vehicle_type);
-    _mav_put_uint8_t(buf, 27, is_vtol);
-    _mav_put_uint8_t(buf, 28, vtol_fw_permanent_stab);
-    _mav_put_uint8_t(buf, 29, in_transition_mode);
-    _mav_put_uint8_t(buf, 30, in_transition_to_fw);
-    _mav_put_uint8_t(buf, 31, rc_signal_lost);
-    _mav_put_uint8_t(buf, 32, rc_input_mode);
-    _mav_put_uint8_t(buf, 33, data_link_lost);
-    _mav_put_uint8_t(buf, 34, data_link_lost_counter);
-    _mav_put_uint8_t(buf, 35, high_latency_data_link_lost);
-    _mav_put_uint8_t(buf, 36, engine_failure);
-    _mav_put_uint8_t(buf, 37, mission_failure);
+    _mav_put_uint8_t(buf, 20, internal_state);
+    _mav_put_uint8_t(buf, 21, nav_state);
+    _mav_put_uint8_t(buf, 22, arming_state);
+    _mav_put_uint8_t(buf, 23, hil_state);
+    _mav_put_uint8_t(buf, 24, red_state);
+    _mav_put_uint8_t(buf, 25, failsafe);
+    _mav_put_uint8_t(buf, 26, system_type);
+    _mav_put_uint8_t(buf, 27, vehicle_type);
+    _mav_put_uint8_t(buf, 28, is_vtol);
+    _mav_put_uint8_t(buf, 29, vtol_fw_permanent_stab);
+    _mav_put_uint8_t(buf, 30, in_transition_mode);
+    _mav_put_uint8_t(buf, 31, in_transition_to_fw);
+    _mav_put_uint8_t(buf, 32, rc_signal_lost);
+    _mav_put_uint8_t(buf, 33, rc_input_mode);
+    _mav_put_uint8_t(buf, 34, data_link_lost);
+    _mav_put_uint8_t(buf, 35, data_link_lost_counter);
+    _mav_put_uint8_t(buf, 36, high_latency_data_link_lost);
+    _mav_put_uint8_t(buf, 37, engine_failure);
+    _mav_put_uint8_t(buf, 38, mission_failure);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS, buf, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_MIN_LEN, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_LEN, MAVLINK_MSG_ID_MVL_VEHICLE_STATUS_CRC);
 #else
@@ -450,6 +463,7 @@ static inline void mavlink_msg_mvl_vehicle_status_send_buf(mavlink_message_t *ms
     packet->onboard_control_sensors_present = onboard_control_sensors_present;
     packet->onboard_control_sensors_enabled = onboard_control_sensors_enabled;
     packet->onboard_control_sensors_health = onboard_control_sensors_health;
+    packet->internal_state = internal_state;
     packet->nav_state = nav_state;
     packet->arming_state = arming_state;
     packet->hil_state = hil_state;
@@ -520,13 +534,23 @@ static inline uint32_t mavlink_msg_mvl_vehicle_status_get_onboard_control_sensor
 }
 
 /**
+ * @brief Get field internal_state from mvl_vehicle_status message
+ *
+ * @return  Commander/main state
+ */
+static inline uint8_t mavlink_msg_mvl_vehicle_status_get_internal_state(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_uint8_t(msg,  20);
+}
+
+/**
  * @brief Get field nav_state from mvl_vehicle_status message
  *
  * @return  Navigator state
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_nav_state(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  20);
+    return _MAV_RETURN_uint8_t(msg,  21);
 }
 
 /**
@@ -536,7 +560,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_nav_state(const mavlink
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_arming_state(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  21);
+    return _MAV_RETURN_uint8_t(msg,  22);
 }
 
 /**
@@ -546,7 +570,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_arming_state(const mavl
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_hil_state(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  22);
+    return _MAV_RETURN_uint8_t(msg,  23);
 }
 
 /**
@@ -556,7 +580,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_hil_state(const mavlink
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_red_state(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  23);
+    return _MAV_RETURN_uint8_t(msg,  24);
 }
 
 /**
@@ -566,7 +590,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_red_state(const mavlink
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_failsafe(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  24);
+    return _MAV_RETURN_uint8_t(msg,  25);
 }
 
 /**
@@ -576,7 +600,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_failsafe(const mavlink_
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_system_type(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  25);
+    return _MAV_RETURN_uint8_t(msg,  26);
 }
 
 /**
@@ -586,7 +610,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_system_type(const mavli
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_vehicle_type(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  26);
+    return _MAV_RETURN_uint8_t(msg,  27);
 }
 
 /**
@@ -596,7 +620,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_vehicle_type(const mavl
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_is_vtol(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  27);
+    return _MAV_RETURN_uint8_t(msg,  28);
 }
 
 /**
@@ -606,7 +630,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_is_vtol(const mavlink_m
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_vtol_fw_permanent_stab(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  28);
+    return _MAV_RETURN_uint8_t(msg,  29);
 }
 
 /**
@@ -616,7 +640,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_vtol_fw_permanent_stab(
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_in_transition_mode(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  29);
+    return _MAV_RETURN_uint8_t(msg,  30);
 }
 
 /**
@@ -626,7 +650,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_in_transition_mode(cons
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_in_transition_to_fw(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  30);
+    return _MAV_RETURN_uint8_t(msg,  31);
 }
 
 /**
@@ -636,7 +660,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_in_transition_to_fw(con
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_rc_signal_lost(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  31);
+    return _MAV_RETURN_uint8_t(msg,  32);
 }
 
 /**
@@ -646,7 +670,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_rc_signal_lost(const ma
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_rc_input_mode(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  32);
+    return _MAV_RETURN_uint8_t(msg,  33);
 }
 
 /**
@@ -656,7 +680,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_rc_input_mode(const mav
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_data_link_lost(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  33);
+    return _MAV_RETURN_uint8_t(msg,  34);
 }
 
 /**
@@ -666,7 +690,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_data_link_lost(const ma
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_data_link_lost_counter(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  34);
+    return _MAV_RETURN_uint8_t(msg,  35);
 }
 
 /**
@@ -676,7 +700,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_data_link_lost_counter(
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_high_latency_data_link_lost(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  35);
+    return _MAV_RETURN_uint8_t(msg,  36);
 }
 
 /**
@@ -686,7 +710,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_high_latency_data_link_
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_engine_failure(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  36);
+    return _MAV_RETURN_uint8_t(msg,  37);
 }
 
 /**
@@ -696,7 +720,7 @@ static inline uint8_t mavlink_msg_mvl_vehicle_status_get_engine_failure(const ma
  */
 static inline uint8_t mavlink_msg_mvl_vehicle_status_get_mission_failure(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint8_t(msg,  37);
+    return _MAV_RETURN_uint8_t(msg,  38);
 }
 
 /**
@@ -712,6 +736,7 @@ static inline void mavlink_msg_mvl_vehicle_status_decode(const mavlink_message_t
     mvl_vehicle_status->onboard_control_sensors_present = mavlink_msg_mvl_vehicle_status_get_onboard_control_sensors_present(msg);
     mvl_vehicle_status->onboard_control_sensors_enabled = mavlink_msg_mvl_vehicle_status_get_onboard_control_sensors_enabled(msg);
     mvl_vehicle_status->onboard_control_sensors_health = mavlink_msg_mvl_vehicle_status_get_onboard_control_sensors_health(msg);
+    mvl_vehicle_status->internal_state = mavlink_msg_mvl_vehicle_status_get_internal_state(msg);
     mvl_vehicle_status->nav_state = mavlink_msg_mvl_vehicle_status_get_nav_state(msg);
     mvl_vehicle_status->arming_state = mavlink_msg_mvl_vehicle_status_get_arming_state(msg);
     mvl_vehicle_status->hil_state = mavlink_msg_mvl_vehicle_status_get_hil_state(msg);

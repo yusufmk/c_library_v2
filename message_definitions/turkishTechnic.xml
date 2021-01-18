@@ -17,6 +17,7 @@
 			<field type="uint32_t" name="onboard_control_sensors_present">present sensors</field>
 			<field type="uint32_t" name="onboard_control_sensors_enabled">enabled sensors</field>
 			<field type="uint32_t" name="onboard_control_sensors_health">sensor health</field>
+			<field type="uint8_t" name="internal_state">Commander/main state</field>
 			<field type="uint8_t" name="nav_state">Navigator state</field>
 			<field type="uint8_t" name="arming_state">Arming state</field>
 			<field type="uint8_t" name="hil_state">hil state</field>

@@ -4913,6 +4913,9 @@
       <field type="float" name="afz" units="m/s/s">Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N</field>
       <field type="float" name="yaw" units="rad">yaw setpoint</field>
       <field type="float" name="yaw_rate" units="rad/s">yaw rate setpoint</field>
+      <field type="float" name="jerkx" units="m/s/s">X jerk in NED frame</field>
+      <field type="float" name="jerky" units="m/s/s">Y jerk in NED frame</field>
+      <field type="float" name="jerkz" units="m/s/s">Z jerk in NED frame</field>
     </message>
     <message id="86" name="SET_POSITION_TARGET_GLOBAL_INT">
       <description>Sets a desired vehicle position, velocity, and/or acceleration in a global coordinate system (WGS84). Used by an external controller to command the vehicle (manual controller or other system).</description>
